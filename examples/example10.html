@@ -21,11 +21,17 @@
 				padding:10px;
 				box-sizing:border-box;
 			}
+			h2{
+				margin-top:7px;
+				margin-bottom:7px;
+			}
 		</style>
   	</head>
   	<body>
   		<!-- the divs to hold the tracks -->
-  		<div style="white-space:nowrap;position:relative;height:300px" >
+  		<h2> Layout </h2>
+  		<div class='dsd'> View Source <a href="https://github.com/Hughes-Genome-Group/MLVPanel/blob/master/examples/example10.html">here</a></div>
+  		<div style="display:flex;justify-content:center;white-space:nowrap;position:relative;height:300px" >
 			<div  class="container-div">
 					<div class ="track-div"  id="default-layout"></div>
 					<div class="text-div">
@@ -38,16 +44,17 @@
 			<div class="container-div">
 					<div  class ="track-div"  id="discrete-wigs"></div>
 					<div class="text-div">
-						Now the wig tracks are discrete taking up their own 
-						space.
+						By adding discrete:true to the wig configs,
+						they now take up their own space.
 					</div>
 			 </div>
 			 	<div class="container-div">
 					<div class="track-div" id="fixed-height-mode"></div>
 					<div class="text-div">
-						In fixed height mode, each track is discrete. The genes
-						track will no longer expand as the genes stack, but 
-						will be clipped. The two wig tracks share the same group.
+						In fixed height mode, each track is discrete,except
+						the two wig tracks, which share the same group. The genes
+						track will no longer expand as the features stack, but 
+						will be clipped. 
 					</div>
 
 			 </div>

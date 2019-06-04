@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+	<head>
+		<style>
+			.track-div{
+				height:300px;
+				width:300px;
+				border:1px solid black;
+		
+			}
+			.container-div{
+				height:500px;
+				width:300px;
+				display:inline-block;
+			}
+			.text-div{
+				position:absolute;
+				top:310px;
+				width:300px;
+				white-space:normal;
+				padding:10px;
+				box-sizing:border-box;
+			}
+		</style>
+  	</head>
+  	<body>
+  		<!-- the divs to hold the tracks -->
+  		<div style="white-space:nowrap;position:relative;height:300px" >
+			<div  class="container-div">
+					<div class ="track-div"  id="default-layout"></div>
+					<div class="text-div">
+						Default settings , wigs take up full panel and
+						overlaid by features. Zoom out and the gene track will
+						expand as features are stacked pushing the feature 
+						track down.
+					</div>
+			 </div>
+			<div class="container-div">
+					<div  class ="track-div"  id="discrete-wigs"></div>
+					<div class="text-div">
+						Now the wig tracks are discrete taking up their own 
+						space.
+					</div>
+			 </div>
+			 	<div class="container-div">
+					<div class="track-div" id="fixed-height-mode"></div>
+					<div class="text-div">
+						In fixed height mode, each track is discrete. The genes
+						track will no longer expand as the genes stack, but 
+						will be clipped. The two wig tracks share the same group.
+					</div>
+
+			 </div>
+		</div>
+
+
+     	<script src = "../dist/mlv_panel.js"></script>
+     	<script>
+			var panel_config={
+				div:"default-layout",
+				allow_user_drag:true,
+				allow_user_zoom:true,
+				ruler_track:true,
+				
+			}
+			var bw1_url = "https://lanceotron.molbiol.ox.ac.uk/tracks/examples/peaks.bw";
+			var bw2_url ="https://lanceotron.molbiol.ox.ac.uk/tracks/examples/peaks2.bw";
+			var gene_url ="https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz";
+			var  bb_url ="https://lanceotron.molbiol.ox.ac.uk/tracks/examples/region.bb"
+
+			//minimal config, mainly default settings
+			var panel1 = new MLVPanel(
+				[
+					{url:bw1_url,color:"#6495ED",track_id:"peaks",opacity:0.5},
+					{url:bw2_url,color:"#00FFFF",opacity:0.5,scale_link_to:"peaks"},
+					{url:gene_url,displayMode:"EXPANDED"},
+					{url:bb_url,color:"#FF7F50"}
+				],
+				panel_config
+			);
+
+			panel_config.div = "discrete-wigs"
+
+			var panel2 = new MLVPanel(
+			[
+					{url:bw1_url,color:"#6495ED",discrete:true,height:100,track_id:"peaks",opacity:0.5,scale:"dynamic"},
+					{url:bw2_url,color:"#00FFFF",
+						discrete:true,height:100,opacity:0.5,scale:"dynamic"},
+					{url:gene_url,
+						displayMode:"EXPANDED"},
+					{url:bb_url,color:"#FF7F50"}
+				],
+				panel_config
+			);
+			panel_config.div="fixed-height-mode";
+			panel_config.fixed_height_mode=true;
+				var panel3 = new MLVPanel(
+			[
+					{url:bw1_url,color:"#6495ED",
+						group:"g1",height:150,track_id:"peaks",opacity:0.5,scale:"dynamic"},
+					{url:bw2_url,color:"#00FFFF",
+						group:"g1",height:100,opacity:0.5,scale_link_to:"peaks"},
+					{url:gene_url,
+						displayMode:"EXPANDED",height:60},
+					{url:bb_url,color:"#FF7F50",height:30}
+				],
+				panel_config
+			);
+
+
+
+			//go to a genomic position
+			panel1.update("chr19",470000,510000);
+			panel2.update("chr19",470000,510000);
+			panel3.update("chr19",470000,510000);	
+		</script>
+  	</body>
+</html>

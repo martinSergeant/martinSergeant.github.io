@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+	<head>
+		<!-- css files required -->
+		<link rel="stylesheet" href="static/bootstrap-4.10/css/bootstrap.min.css">
+		<link rel="stylesheet" href="static/css/card_layout.css">
+  	</head>
+
+	</head>
+ 	<body>
+ 		<div class="container">
+ 			<nav class="navbar navbar-light bg-light">
+  				<a class="navbar-brand" href="#!">MLVPanel Examples</a>
+			</nav>
+			<div id="example-deck" class ="card-deck"></div>
+		</div>
+		
+		
+		<script src="dist/mlv_panel.js" ></script>
+		<script src="static/bootstrap-4.10/js/bootstrap.min.js" ></script>
+		<script src="static/js/setup_examples.js" ></script>
+		<script>
+			$(function(){
+				setupExamples("data/mlv_panels.json","example-deck")
+			});
+
+		</script>
+
+
+ 	 </body>
+</html>

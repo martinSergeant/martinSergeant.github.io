@@ -1,0 +1,85 @@
+[
+{
+	"id":1,
+	"title":"Basic Setup",
+	"desc":"Default setup with user basic interaction (panning and zooming)."
+},
+{
+	"id":2,
+	"title":"Development Setup",
+	"desc":"Running the JavaScript in a modern browser without building from the source code.",
+	"disable_view":true
+
+},
+{
+	"id":3,
+	"title":"Linking Panels",
+	"desc":"Link views by adding a listener to the main panel which updates the 'zoomed in' panel."
+},
+{
+	"id":4,
+	"title":"Popup Panels",
+	"desc":"Clicking on features in the main panel will open up a new panel showing the feature in more detail. The panels can be resized,moved and closed"
+},
+{
+	"id":5,
+	"title":"Table Thumbnails",
+	"desc":"Use panels as thumbnails to show each region in a table of genomic locations"
+},
+{
+	"id":6,
+	"title":"Custom UCSC Track",
+	"desc":"A simple custom track, which displays a UCSC browser session"
+},
+{
+	"id":7,
+	"title":"Database Source",
+	"desc":"A custom track, which gets the genes to display from a database instead of a file"
+},
+{
+	"id":8,
+	"title":"bigInteract Track",
+	"desc":"A custom track which read UCSC bigInteract format,demomstarted custom mouseover/click"
+},
+{
+	"id":9,
+	"title":"Tiled Image Track",
+	"desc":"A simple track showing HiC images"
+},
+{
+	"id":10,
+	"title":"Different Layouts",
+	"desc":"Shows the effect of different layouts and how to layer bigwig tracks"
+},
+{
+	"id":11,
+	"title":"Highlighting a Region",
+	"desc":"Uses the range selected listener and highlights a region on the panel"
+},
+{
+	"id":12,
+	"title":"Filter/Color Features",
+	"desc":"Filter and color features based on their metadata"
+},
+{
+	"id":13,
+	"title":"Drag and Drop",
+	"desc":"Drag and drop menu items to add tracks to the panel and also to swap tracks between panels"
+},
+{
+	"id":14,
+	"title":"Tool Tips",
+	"desc":"Use the mouse over listener to add custom tooltips to features"
+},
+{
+	"id":15,
+	"title":"Basic Custom Track",
+	"desc":"Basic custom tracks in which features are hard coded and just drawn as rectangles"
+},
+{
+	"id":16,
+	"title":"Drawing Features",
+	"desc":"A custom track which draws each feature as an oval"
+}
+
+]

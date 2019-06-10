@@ -1,0 +1,56 @@
+
+    .mlv-card{
+        max-width:15rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        border-radius: 5px;
+        min-width:200px;
+        margin-bottom:15px !important;
+    }
+
+    .card-deck{
+        margin-top:10px;
+    }
+
+    .mlv-card .card-header{
+        padding-top:8px;
+        padding-bottom:3px;
+    }
+
+    .mlv-card .btn{
+        padding:1px 10px 2px 10px;
+    }
+
+    .mlv-card .card-footer{
+        padding:5px 20px;
+        background-color:#c7e2dd
+
+    
+    }
+
+    .mlv-card p{
+      font-size:0.9rem;
+    }
+    .mlv-header-card{
+        padding: 0.5rem;
+        margin-bottom:1rem;
+        margin-top:1rem;
+        display:inline-block;
+        background-color:lightgray;
+    }
+
+    .mlv-main-card{
+      margin-top:0.2rem;
+      margin-bottom:0.2rem;
+      width:100%;
+    }
+
+
+
+    .card-header h5{
+      margin-bottom:0rem;
+    }
+
+    .mlv-header-card-item{
+      margin-left:0.3rem;
+      margin-right:0.3rem;
+    }

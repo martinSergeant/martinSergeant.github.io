@@ -1,4 +1,4 @@
-function setupExamples(json_file,card_deck){
+function setupExamples(json_file,card_deck,example_folder,github_name){
 
 	$.ajax({
 		type:"GET",
@@ -20,11 +20,11 @@ function setupExamples(json_file,card_deck){
 			}
 			$("<a>").attr({
 						"class":bt_class,
-						"href":"https://martinsergeant.github.io/examples/example"+item.id+".html"
+						"href":"https://martinsergeant.github.io/"+example_folder+"/example"+item.id+".html"
 						}).text("view").appendTo(footer)
 			$("<a>").attr({
 						"class":"btn btn-secondary btn-sm float-right",
-						"href":"https://github.com/Hughes-Genome-Group/MLVPanel/blob/master/examples/example"+item.id+".html"
+						"href":"https://github.com/Hughes-Genome-Group/"+github_name+"/blob/master/examples/example"+item.id+".html"
 						}).text("source").appendTo(footer)
 			
 			card.append(header).append(body).append(footer).appendTo(deck);

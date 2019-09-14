@@ -29,13 +29,14 @@
 			//minimal config, only track urls given
 			var panel1 = new MLVPanel(
 				[
-					{url:"https://lanceotron.molbiol.ox.ac.uk/tracks/examples/peaks.bw"},
-					{url:"https://lanceotron.molbiol.ox.ac.uk/tracks/examples/refGene.hg19.bed.gz"}
+					//{url:"https://lanceotron.molbiol.ox.ac.uk/tracks/examples/peaks.bw"},
+					//{url:"https://lanceotron.molbiol.ox.ac.uk/tracks/examples/refGene.hg19.bed.gz"}
+					{url:"https://lanceotron.molbiol.ox.ac.uk/tracks/projects/814/anno_814.bed.gz",decode_function:"generic",displayMode:"EXPANDED"}
 				],
 				panel_config
 			);
 			//go to a genomic position
-			panel1.update("chr16",100000,200000);
+			panel1.update("chr1",100000,200000);
 		</script>
   	</body>
 </html>

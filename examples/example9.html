@@ -93,7 +93,9 @@
 			}
 			
 			//register the track
-			MLVTrack.custom_tracks['tiled_image_track']=TiledImageTrack;
+			MLVTrack.track_types['tiled_image_track']={
+				"class":TiledImageTrack
+			}
 
 			//now create panel and add the track
 			let panel_config={

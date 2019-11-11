@@ -63,7 +63,10 @@
 
 			}
 			//register the new track type
-			MLVTrack.custom_tracks['custom_gene']=CustomGeneTrack;
+			MLVTrack.track_types['custom_gene']={
+					"class":CustomGeneTrack,
+					name:"Database Source"
+                }
 
     		//allow user interaction
 			var panel_config={

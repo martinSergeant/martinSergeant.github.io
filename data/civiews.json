@@ -2,6 +2,21 @@
 {
 	"id":1,
 	"title":"Basic Setup",
-	"desc":"Default setup with user basic interaction"
+	"desc":"Default setup"
+},
+{
+	"id":2,
+	"title":"Simple Text Box",
+	"desc":"To demonsrate how to add your own chart type, simple text box is created"
+},
+{
+	"id":3,
+	"title":"Word List",
+	"desc":"To demonstarte filtering, a simple interactive word list is created"
 }
+
 ]
+
+
+
+

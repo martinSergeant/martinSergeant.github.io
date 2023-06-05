@@ -1,0 +1,142 @@
+{
+  "default": {
+    "initialCharts": {
+      "cells": [
+        {
+          "title": "phenograph_cluster_scaledtrim_k30",
+          "legend": "",
+          "type": "heat_map",
+          "param": [
+            "phenograph_cluster_scaledtrim_k30",
+            "ACE2",
+            "aSMA",
+            "CD14",
+            "CD15",
+            "CD16",
+            "CD161",
+            "CD20",
+            "CD200R",
+            "CD3",
+            "CD31",
+            "CD4",
+            "CD45",
+            "CD45RO",
+            "CD56",
+            "CD64",
+            "CD68",
+            "CD8a",
+            "Collagen1",
+            "ECadherin",
+            "EpCAM",
+            "FoxP3",
+            "GranzymeB",
+            "Ki67",
+            "PanKeratin",
+            "PF4",
+            "TMPRSS2",
+            "Va7.2",
+            "Vimentin"
+          ],
+          "id": "DF6QAK",
+          "size": [
+            580,
+            494
+          ],
+          "axis": {
+            "x": {
+              "textSize": 13,
+              "label": "",
+              "size": 25,
+              "tickfont": 10
+            },
+            "y": {
+              "textSize": 13,
+              "label": "",
+              "size": 40,
+              "tickfont": 10
+            },
+            "tx": {
+              "textSize": 13,
+              "label": "",
+              "size": 45,
+              "tickfont": 10
+            }
+          },
+          "method": "median",
+          "color_scale": {
+            "log": false,
+            "trim": "0.01"
+          },
+          "color_legend": {
+            "display": true,
+            "pos": [
+              276,
+              257
+            ]
+          },
+          "cluster_rows": true,
+          "cluster_columns": true,
+          "position": [
+            10,
+            10
+          ]
+        },
+        {
+          "title": "UMAP1_scaledtrim x UMAP2_scaledtrim",
+          "legend": "",
+          "type": "wgl_scatter_plot",
+          "param": [
+            "UMAP1_scaledtrim",
+            "UMAP2_scaledtrim"
+          ],
+          "axis": {
+            "x": {
+              "size": 30,
+              "label": "UMAP1_scaledtrim",
+              "textsize": 13,
+              "textSize": 13,
+              "tickfont": 10
+            },
+            "y": {
+              "size": 45,
+              "label": "UMAP2_scaledtrim",
+              "textsize": 13,
+              "textSize": 13,
+              "tickfont": 10
+            }
+          },
+          "id": "DyOXMe",
+          "size": [
+            441,
+            495
+          ],
+          "tooltip": {
+            "show": false
+          },
+          "default_color": "#377eb8",
+          "brush": "poly",
+          "on_filter": "hide",
+          "radius": 2,
+          "opacity": 0.8,
+          "color_by": "phenograph_cluster_scaledtrim_k30",
+          "color_legend": {
+            "display": false,
+            "pos": [
+              45,
+              10
+            ]
+          },
+          "position": [
+            609,
+            12
+          ]
+        }
+      ]
+    },
+    "dataSources": {
+      "cells": {
+        "panelWidth": 100
+      }
+    }
+  }
+}

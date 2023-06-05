@@ -1,0 +1,7 @@
+{
+  "all_views": [
+    "default"
+  ],
+  "permission": "edit",
+  "popouturl": "popout.html"
+}

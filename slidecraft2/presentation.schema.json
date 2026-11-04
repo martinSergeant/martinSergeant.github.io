@@ -1,0 +1,320 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://slidecraft.local/presentation.schema.json",
+  "title": "Slidecraft presentation",
+  "description": "A Slidecraft deck. Slides are 16:9. All element geometry (x, y, width, height) is a percentage (0-100) of the slide, with the origin at the top-left. Font sizes are percentages of slide width (e.g. 6 = large title, 2 = body text, 1.2 = small label). Elements render in array order, so later elements sit on top. Use '\\n' in text for line breaks. Colors are 6-digit hex like '#1d2923'.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "title", "transition", "slides"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "minLength": 1, "description": "Stable identifier for the deck, e.g. 'q3-roadmap'." },
+    "title": { "type": "string", "description": "Presentation title shown in the editor." },
+    "transition": {
+      "enum": ["fade", "slide", "zoom", "flip"],
+      "description": "Transition used between slides in presenter mode."
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/slide" }
+    },
+    "assets": {
+      "type": "array",
+      "description": "Presentation-level image library. Slides and image elements can refer to an asset using 'asset:<id>'.",
+      "items": { "$ref": "#/$defs/imageAsset" }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Saved slide snapshots used when creating slides from templates.",
+      "items": { "$ref": "#/$defs/slideTemplate" }
+    }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$",
+      "description": "6-digit hex color, e.g. '#18211e'."
+    },
+    "shapeOutline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["color", "width"],
+      "properties": {
+        "color": { "$ref": "#/$defs/color" },
+        "width": { "type": "integer", "minimum": 1, "maximum": 12, "description": "Outline thickness in CSS pixels." }
+      }
+    },
+    "percent": { "type": "number", "minimum": 0, "maximum": 100 },
+    "imageAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "src"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Stable identifier used by asset:<id> references." },
+        "name": { "type": "string", "minLength": 1, "description": "Display name in the image picker." },
+        "src": { "type": "string", "minLength": 1, "not": { "pattern": "^asset:" }, "description": "Image URL or embedded data:image URI stored once in the presentation library." },
+        "width": { "type": "number", "exclusiveMinimum": 0, "description": "Optional intrinsic image width in pixels." },
+        "height": { "type": "number", "exclusiveMinimum": 0, "description": "Optional intrinsic image height in pixels." }
+      }
+    },
+    "animation": {
+      "enum": ["none", "fade", "rise", "pop", "slide", "wipe"],
+      "description": "Entrance animation: fade (opacity), rise (fade + slide up), pop (fade + scale), slide (fade + move in from the left), wipe (reveal from left to right)."
+    },
+    "slide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "background", "elements"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique within the deck." },
+        "title": { "type": "string", "description": "Slide name shown in the slide list." },
+        "background": { "$ref": "#/$defs/color" },
+        "backgroundImage": { "type": "string", "minLength": 1, "description": "Optional image URL, embedded data:image URI, or asset:<id> reference, rendered to cover the slide." },
+        "backgroundImageOpacity": { "type": "number", "minimum": 0, "maximum": 100, "description": "Background image opacity as a percentage; defaults to 100." },
+        "isTemplate": { "type": "boolean", "description": "When true, this slide is available as a reusable slide template." },
+        "elements": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/element" }
+        }
+      }
+    },
+    "slideTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceSlideId", "title", "background", "elements"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Template identifier." },
+        "sourceSlideId": { "type": "string", "minLength": 1, "description": "ID of the slide from which this template was saved." },
+        "title": { "type": "string", "description": "Slide title stored in the template snapshot." },
+        "background": { "$ref": "#/$defs/color" },
+        "backgroundImage": { "type": "string", "minLength": 1, "description": "Optional image URL, embedded data:image URI, or asset:<id> reference, rendered to cover the slide." },
+        "backgroundImageOpacity": { "type": "number", "minimum": 0, "maximum": 100, "description": "Background image opacity as a percentage; defaults to 100." },
+        "elements": { "type": "array", "items": { "$ref": "#/$defs/element" } }
+      }
+    },
+    "baseElement": {
+      "type": "object",
+      "required": ["id", "type", "x", "y", "width", "height", "animation"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique within the deck." },
+        "x": { "$ref": "#/$defs/percent", "description": "Left edge, % of slide width." },
+        "y": { "$ref": "#/$defs/percent", "description": "Top edge, % of slide height." },
+        "width": { "$ref": "#/$defs/percent", "description": "% of slide width." },
+        "height": { "$ref": "#/$defs/percent", "description": "% of slide height." },
+        "animation": { "$ref": "#/$defs/animation" },
+        "animationDurationMs": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 3000,
+          "description": "Optional entrance animation duration in milliseconds. Omit to use the effect default: fade 600, rise 700, pop 650, slide 700, wipe 800."
+        },
+        "animationTrigger": {
+          "enum": ["onSlide", "onKeyPress"],
+          "description": "When the element appears. Omit or use onSlide for immediate appearance; onKeyPress waits for the presenter to advance."
+        },
+        "animationOrder": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Reveal step for onKeyPress elements. Elements with the same order appear together; lower numbers appear first."
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["title", "text", "link", "image", "shape", "widget"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "title" } } }, "then": { "$ref": "#/$defs/title" } },
+        { "if": { "properties": { "type": { "const": "text" } } }, "then": { "$ref": "#/$defs/text" } },
+        { "if": { "properties": { "type": { "const": "link" } } }, "then": { "$ref": "#/$defs/link" } },
+        { "if": { "properties": { "type": { "const": "image" } } }, "then": { "$ref": "#/$defs/image" } },
+        { "if": { "properties": { "type": { "const": "shape" } } }, "then": { "$ref": "#/$defs/shape" } },
+        { "if": { "properties": { "type": { "const": "widget" } } }, "then": { "$ref": "#/$defs/widget" } }
+      ]
+    },
+    "title": {
+      "description": "Large display heading. Bold, tight line height. Optional alignment defaults to left.",
+      "allOf": [{ "$ref": "#/$defs/baseElement" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "text", "fontSize", "color"],
+      "properties": {
+        "type": { "const": "title" },
+        "text": { "type": "string" },
+        "fontSize": { "type": "number", "minimum": 0.9, "maximum": 10, "description": "% of slide width. Typically 4-8." },
+        "color": { "$ref": "#/$defs/color" },
+        "align": { "enum": ["left", "center", "right"] }
+      }
+    },
+    "text": {
+      "description": "Body copy, labels, captions.",
+      "allOf": [{ "$ref": "#/$defs/baseElement" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "text", "fontSize", "color", "align"],
+      "properties": {
+        "type": { "const": "text" },
+        "text": { "type": "string" },
+        "fontSize": { "type": "number", "minimum": 0.9, "maximum": 10, "description": "% of slide width. Typically 1.2-2.5." },
+        "color": { "$ref": "#/$defs/color" },
+        "align": { "enum": ["left", "center", "right"] },
+        "bulletMarker": {
+          "enum": ["none", "disc", "circle", "square", "dash", "arrow"],
+          "description": "Optional marker repeated for each newline-separated list item."
+        },
+        "revealItemsOnKeyPress": {
+          "type": "boolean",
+          "description": "Reveal one bullet at a time during presenter mode; the next build or slide waits until all items are shown."
+        }
+      }
+    },
+    "link": {
+      "description": "A text link that opens in a new browser tab.",
+      "allOf": [{ "$ref": "#/$defs/baseElement" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "text", "url", "fontSize", "color"],
+      "properties": {
+        "type": { "const": "link" },
+        "text": { "type": "string" },
+        "url": { "type": "string", "minLength": 1, "description": "HTTP(S), mailto, tel, or relative URL." },
+        "fontSize": { "type": "number", "minimum": 0.9, "maximum": 10 },
+        "color": { "$ref": "#/$defs/color" }
+      }
+    },
+    "image": {
+      "description": "An image from the presentation asset library, a URL, or a path served by the app (e.g. '/landscape.svg').",
+      "allOf": [{ "$ref": "#/$defs/baseElement" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "src", "alt", "objectFit"],
+      "properties": {
+        "type": { "const": "image" },
+        "src": { "type": "string", "minLength": 1, "description": "asset:<id> reference, https URL, app path, or embedded data:image/... URI." },
+        "alt": { "type": "string", "description": "Accessible description of the image." },
+        "shape": { "enum": ["rectangle", "circle"], "description": "Image frame shape; defaults to rectangle. For a true circle on a 16:9 slide, height must equal width * 16/9. Circular images always render with objectFit cover." },
+        "objectFit": { "enum": ["cover", "contain"], "description": "cover fills the frame (crops); contain fits inside. Circular images always render as cover." }
+      }
+    },
+    "shape": {
+      "description": "A decorative shape with optional fill and outline.",
+      "allOf": [{ "$ref": "#/$defs/baseElement" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "shape", "fill"],
+      "properties": {
+        "type": { "const": "shape" },
+        "shape": { "enum": ["rectangle", "circle", "arrow"] },
+        "fill": { "oneOf": [{ "$ref": "#/$defs/color" }, { "const": "none" }] },
+        "outline": { "$ref": "#/$defs/shapeOutline" },
+        "rotation": { "type": "number", "minimum": -180, "maximum": 180, "description": "Clockwise rotation in degrees; defaults to 0." }
+      }
+    },
+    "widgetChildBase": {
+      "type": "object",
+      "required": ["id", "type", "x", "y", "width", "height"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "enum": ["title", "text", "link", "image", "shape"] },
+        "x": { "$ref": "#/$defs/percent", "description": "Left edge relative to the widget bounds." },
+        "y": { "$ref": "#/$defs/percent", "description": "Top edge relative to the widget bounds." },
+        "width": { "$ref": "#/$defs/percent", "description": "Width relative to the widget bounds." },
+        "height": { "$ref": "#/$defs/percent", "description": "Height relative to the widget bounds." }
+      }
+    },
+    "widgetChild": {
+      "oneOf": [
+        { "$ref": "#/$defs/widgetTitleChild" },
+        { "$ref": "#/$defs/widgetTextChild" },
+        { "$ref": "#/$defs/widgetLinkChild" },
+        { "$ref": "#/$defs/widgetImageChild" },
+        { "$ref": "#/$defs/widgetShapeChild" }
+      ]
+    },
+    "widgetTitleChild": {
+      "allOf": [{ "$ref": "#/$defs/widgetChildBase" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "text", "fontSize", "color"],
+      "properties": {
+        "type": { "const": "title" },
+        "text": { "type": "string" },
+        "fontSize": { "type": "number", "minimum": 0.9, "maximum": 10 },
+        "color": { "$ref": "#/$defs/color" },
+        "align": { "enum": ["left", "center", "right"] }
+      }
+    },
+    "widgetTextChild": {
+      "allOf": [{ "$ref": "#/$defs/widgetChildBase" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "text", "fontSize", "color", "align"],
+      "properties": {
+        "type": { "const": "text" },
+        "text": { "type": "string" },
+        "fontSize": { "type": "number", "minimum": 0.9, "maximum": 10 },
+        "color": { "$ref": "#/$defs/color" },
+        "align": { "enum": ["left", "center", "right"] },
+        "bulletMarker": { "enum": ["none", "disc", "circle", "square", "dash", "arrow"] },
+        "revealItemsOnKeyPress": { "type": "boolean" }
+      }
+    },
+    "widgetImageChild": {
+      "allOf": [{ "$ref": "#/$defs/widgetChildBase" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "src", "alt", "objectFit"],
+      "properties": {
+        "type": { "const": "image" },
+        "src": { "type": "string", "minLength": 1 },
+        "alt": { "type": "string" },
+        "shape": { "enum": ["rectangle", "circle"] },
+        "objectFit": { "enum": ["cover", "contain"] }
+      }
+    },
+    "widgetLinkChild": {
+      "allOf": [{ "$ref": "#/$defs/widgetChildBase" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "text", "url", "fontSize", "color"],
+      "properties": {
+        "type": { "const": "link" },
+        "text": { "type": "string" },
+        "url": { "type": "string", "minLength": 1 },
+        "fontSize": { "type": "number", "minimum": 0.9, "maximum": 10 },
+        "color": { "$ref": "#/$defs/color" }
+      }
+    },
+    "widgetShapeChild": {
+      "allOf": [{ "$ref": "#/$defs/widgetChildBase" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "shape", "fill"],
+      "properties": {
+        "type": { "const": "shape" },
+        "shape": { "enum": ["rectangle", "circle", "arrow"] },
+        "fill": { "oneOf": [{ "$ref": "#/$defs/color" }, { "const": "none" }] },
+        "outline": { "$ref": "#/$defs/shapeOutline" },
+        "rotation": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "widget": {
+      "description": "A flat, movable group. Child geometry is relative to the widget bounds; all children share this widget's animation.",
+      "allOf": [{ "$ref": "#/$defs/baseElement" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["type", "elements"],
+      "properties": {
+        "type": { "const": "widget" },
+        "name": { "type": "string" },
+        "width": { "type": "number", "exclusiveMinimum": 0, "maximum": 100 },
+        "height": { "type": "number", "exclusiveMinimum": 0, "maximum": 100 },
+        "elements": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/widgetChild" } }
+      }
+    }
+  }
+}

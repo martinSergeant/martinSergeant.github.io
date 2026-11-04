@@ -1,0 +1,80 @@
+{
+  "$schema": "../presentation.schema.json",
+  "schemaVersion": 1,
+  "id": "product-update",
+  "title": "Product update",
+  "transition": "slide",
+  "slides": [
+    {
+      "id": "cover",
+      "title": "Cover",
+      "background": "#18211e",
+      "elements": [
+        { "id": "cover-accent", "type": "shape", "shape": "circle", "x": 70, "y": 12, "width": 22, "height": 39, "animation": "pop", "fill": "#d3ee6b" },
+        { "id": "cover-kicker", "type": "text", "x": 8, "y": 18, "width": 45, "height": 6, "animation": "fade", "text": "Q3 PRODUCT UPDATE", "fontSize": 1.25, "color": "#d3ee6b", "align": "left" },
+        { "id": "cover-title", "type": "title", "x": 8, "y": 28, "width": 60, "height": 38, "animation": "rise", "text": "Shipping faster,\nbreaking less.", "fontSize": 6.5, "color": "#f5f4f0" },
+        { "id": "cover-sub", "type": "text", "x": 8, "y": 78, "width": 50, "height": 10, "animation": "fade", "text": "What changed, what it means, what is next.", "fontSize": 1.8, "color": "#c0c9c1", "align": "left" }
+      ]
+    },
+    {
+      "id": "highlights",
+      "title": "Highlights",
+      "background": "#f1eee5",
+      "elements": [
+        { "id": "hl-title", "type": "title", "x": 8, "y": 10, "width": 84, "height": 18, "animation": "rise", "text": "Three wins this quarter", "fontSize": 5, "color": "#1d2923" },
+        {
+          "id": "hl-card-1-widget",
+          "type": "widget",
+          "name": "Deploy time card",
+          "x": 8,
+          "y": 40,
+          "width": 26,
+          "height": 40,
+          "animation": "pop",
+          "elements": [
+            { "id": "hl-card-1", "type": "shape", "shape": "rectangle", "x": 0, "y": 0, "width": 100, "height": 100, "fill": "#d3ee6b" },
+            { "id": "hl-text-1", "type": "text", "x": 11.54, "y": 15, "width": 76.92, "height": 70, "text": "Deploy time\n12 min → 4 min", "fontSize": 1.9, "color": "#1d2923", "align": "left" }
+          ]
+        },
+        {
+          "id": "hl-card-2-widget",
+          "type": "widget",
+          "name": "Incidents card",
+          "x": 37,
+          "y": 40,
+          "width": 26,
+          "height": 40,
+          "animation": "pop",
+          "elements": [
+            { "id": "hl-card-2", "type": "shape", "shape": "rectangle", "x": 0, "y": 0, "width": 100, "height": 100, "fill": "#ffffff" },
+            { "id": "hl-text-2", "type": "text", "x": 11.54, "y": 15, "width": 76.92, "height": 70, "text": "Incidents\n-45% vs Q2", "fontSize": 1.9, "color": "#1d2923", "align": "left" }
+          ]
+        },
+        {
+          "id": "hl-card-3-widget",
+          "type": "widget",
+          "name": "Adoption card",
+          "x": 66,
+          "y": 40,
+          "width": 26,
+          "height": 40,
+          "animation": "pop",
+          "elements": [
+            { "id": "hl-card-3", "type": "shape", "shape": "rectangle", "x": 0, "y": 0, "width": 100, "height": 100, "fill": "#39493e" },
+            { "id": "hl-text-3", "type": "text", "x": 11.54, "y": 15, "width": 76.92, "height": 70, "text": "Adoption\n2.1k weekly teams", "fontSize": 1.9, "color": "#f5f4f0", "align": "left" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "next",
+      "title": "What is next",
+      "background": "#f1eee5",
+      "elements": [
+        { "id": "next-title", "type": "title", "x": 8, "y": 14, "width": 50, "height": 36, "animation": "rise", "text": "Next up:\nreliability.", "fontSize": 6, "color": "#1d2923" },
+        { "id": "next-body", "type": "text", "x": 8, "y": 58, "width": 42, "height": 26, "animation": "fade", "text": "Zero-downtime migrations\nSelf-serve rollbacks\nPer-team dashboards", "fontSize": 2, "color": "#526057", "align": "left" },
+        { "id": "next-image", "type": "image", "x": 60, "y": 14, "width": 32, "height": 72, "animation": "rise", "src": "/landscape.svg", "alt": "Abstract green hills under a rising sun", "objectFit": "cover" }
+      ]
+    }
+  ]
+}
